@@ -30,8 +30,13 @@ public class LoadLocations {
 				 Locations temp = new Locations();
 				 temp.setLatitude(l[0].trim());
 				 temp.setLongitude(l[1].trim());
-				 temp.setRegion(l[1].trim());
-				 temp.setDistrict(l[2].trim());
+				 temp.setRegion(l[2].trim());
+				 temp.setDistrict(l[3].trim());
+				 temp.setStoreId(l[4].trim());
+				 temp.setFootFalls(l[5].trim());
+				 temp.setkRevenue(l[6].trim());
+
+			 
 				 locationsList.add(temp);
 			 }
 			 

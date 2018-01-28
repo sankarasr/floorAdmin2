@@ -45,37 +45,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- jQuery -->
-    <script src="/resources/js/jquery-3.3.1.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/resources/js/bootstrap.js"></script>
-
-    <script src="/resources/js/d3.v3.min.js"></script>
-
-    <script src="/resources/js/c3.js"></script>
-
-	<script src="/resources/js/bubble.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/resources/js/metisMenu.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/resources/js/raphael.js"></script>
-    <script src="/resources/js/morris.js"></script>
-    <!--
-	<script src="../data/morris-data.js"></script>
-	-->
-	
-    <!-- Custom Theme JavaScript -->
-    <script src="/resources/js/sb-admin-2.js"></script>	
-	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	
 
 	<script type="text/javascript">
 		function loadMap() {
-
+		$( ".customerList" ).hide();
+	
 		<%@ page import ="java.util.ArrayList"%>
 		<%@ page import ="java.util.List"%>
 		<%@ page import ="boot.Locations"%>
@@ -94,68 +70,35 @@
 
 		var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
 
-		var locationArray = [<% for (int i = 0; i < locationList.size(); i++) { %>"<%= locationList.get(i).getLatitude() +","+ locationList.get(i).getLongitude()%>"<%= i + 1 < locationList.size() ? ",":"" %><% } %>];
+		var locationArray = [<% for (int i = 0; i < locationList.size(); i++) { %>"<%= locationList.get(i).getLatitude() +","+ locationList.get(i).getLongitude()  +","+ locationList.get(i).getkRevenue() %>"<%= i + 1 < locationList.size() ? ",":"" %><% } %>];
 
 		var arrayLength = locationArray.length;
 
 		for (var i = 0; i < arrayLength; i++) {
 			var templatlang = locationArray[i].split(",");
+			var cityCircle = new google.maps.Circle({
+						strokeColor: '#FF0000',
+						strokeOpacity: 0.8,
+						strokeWeight: 2,
+						fillColor: '#FF0000',
+						fillOpacity: 0.35,
+						map: map,
+						center: new google.maps.LatLng(templatlang[0],templatlang[1]),
+						radius: Math.sqrt(templatlang[2]) * 75
+					  });
 
+			}
+		}
+	</script>
+	
+	<!--
 			var marker = new google.maps.Marker({
-			  //position: new google.maps.LatLng(22.290943, 114.198071),
 			  position: new google.maps.LatLng(templatlang[0],templatlang[1]),
-			  map: map,
+			  map: map,c
 			  title:"Hong Kong"
 			});
-		}
-		}
-	</script>
-	
-	
-	<script type="text/javascript">
-	var chart = c3.generate({
-	bindto: '#testProductChart',
-	data: {
-	  x: 'Week',
-	  url: '/resources/data/test-product-info.csv',
-      type: 'spline',
-	  axes: {
-		BAG: 'y2',
-		BEERnALCOHOLICS: 'y2'
-		}
-	},
-    transition: {
-        duration: 100
-    },
-	legend: {
-		 position: 'bottom'
-	},
-	axis: {
-		x: {
-            label: 'Week'
-        },
-        y: {
-            label: 'Sales($)'
-        },
-        y2: {
-            show: true,
-            label: 'Sales($)'
-        },
-	   y2: {
-			show: true,
-			tick: {
-                format: d3.format("$,")
-            }
-		},
-		y: {
-			show: true,
-			tick: {
-                format: d3.format("$,")
-            }
-		}
-	}
-	});
-	</script>
+	-->
+
 	
 </head>
 
@@ -414,6 +357,9 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+						<li>
+						<i class="fa fa-bar-chart-o fa-fw"></i> Customer Promotions Analysis</a>
+						</li>
 						<!--
                         <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
@@ -505,106 +451,109 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>New Comments!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+
             </div>
             <!-- /.row -->
             <div class="row">
 				<div class="col-lg-12 col-sm-12 col-md-12">
-						
-					<div id="testProductChart" height="100%"></div>
-
+					<div class="panel panel-default">
+						<div class="panel-heading">
+						<i class="fa fa-line-chart fa-1x"></i> SALES TREND BY PRODUCT CATEGORY - Y2016
+						</div>
+						<div class="panel-body">
+							<div id="testProductChart"></div>
+						</div>	
+					</div>	
 				</div>
+				
+				<div class="col-lg-12 col-sm-12 col-md-12">
+					<div class="panel panel-default">	
+						<div class="panel-heading">
+							<i class="fa fa-cart-plus fa-1x"></i> DISCOUNT DISTRIBUTION AND CUSTOMER PROPENSITY
+						</div>
+						<div class="panel-body">
+							<div id="categoryPropensityChart"></div>
+						</div>
+					</div>	
+				</div>
+				
+				<div class="col-lg-12 col-sm-12 col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-user fa-1x"></i> CUSTOMER PROFILE ANALYSIS - <span class="badge badge-light">Jane Chan</span>
+						</div>
+						<div class="panel-body">
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-3">
+												HEALTH FOODS
+												<!--<i class="fa fa-comments fa-5x"></i>-->
+											</div>
+											<div class="col-xs-9 text-right">
+												<div class="huge">19.7K</div>
+												<div>HKD</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-footer">
+										<div class="text-muted"> FORECASTED REV. </div>
+									</div>								
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-green">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-3">
+												CHINESE MEDICENE
+												<!--<i class="fa fa-comments fa-5x"></i>-->
+											</div>
+											<div class="col-xs-9 text-right">
+												<div class="huge">30.3K</div>
+												<div>HKD</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-footer">
+										<div class="text-muted"> FORECASTED REV. </div>
+									</div>											
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="panel panel-danger">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-3">
+												GENERAL MEDICENE
+												<!--<i class="fa fa-comments fa-5x"></i>-->
+											</div>
+											<div class="col-xs-9 text-right">
+												<div class="huge">256</div>
+												<div>HKD</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-footer">
+										<div class="text-muted"> FORECASTED REV. </div>
+									</div>											
+								</div>
+							</div>							
+							<div class="col-lg-3 col-md-6">
+								<div id="customerProfileDetails"></div>
+							</div>
+							<!-- /.col-lg-4 -->							
+						</div>
+					</div>
+				</div>
+				
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+
+                    <div class="panel panel-default col-lg-12 col-md-12">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Store Map
+                            <i class="fa fa-location-arrow fa-1x"></i> STORE LOCATION ANALYSIS
+							<!--
                             <div class="pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -624,6 +573,7 @@
                                     </ul>
                                 </div>
                             </div>
+							-->
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -633,6 +583,11 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
+					
+					<div class="panel panel-default col-lg-12 col-md-12">
+						<div class="panel-heading"> STATISTICS</div>
+						<div class="panel-body"> <div id="locationStats"></div></div>
+					</div>
 					<!--
                     <!-- /.panel --?>
                     <div class="panel panel-default">
@@ -950,7 +905,161 @@
 
     </div>
     <!-- /#wrapper -->
+	
 
+	<script src="/resources/js/d3.v3.min.js"></script>
+    <script src="/resources/js/d3.js"></script>
+	    <!-- jQuery -->
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/resources/js/bootstrap.js"></script>
+
+
+    <script src="/resources/js/c3.js"></script>
+
+	<script src="/resources/js/bubble.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/resources/js/metisMenu.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="/resources/js/raphael.js"></script>
+    <script src="/resources/js/morris.js"></script>
+    <!--
+	<script src="../data/morris-data.js"></script>
+	-->
+	
+    <!-- Custom Theme JavaScript -->
+    <script src="/resources/js/sb-admin-2.js"></script>	
+	
+	
+	<script type="text/javascript">
+	var chart = c3.generate({
+	bindto: '#testProductChart',
+	data: {
+	  x: 'Week',
+	  url: '/resources/data/test-product-info.csv',
+      type: 'spline',
+	  axes: {
+		BAG: 'y2',
+		BEERnALCOHOLICS: 'y2'
+		}
+	},
+    transition: {
+        duration: 3000
+    },
+	legend: {
+		 position: 'bottom'
+	},
+	axis: {
+		x: {
+            label: 'Week'
+        },
+        y: {
+            label: 'Sales($)'
+        },
+        y2: {
+            show: true,
+            label: 'Sales($)'
+        },
+	   y2: {
+			show: true,
+			tick: {
+                format: d3.format("$,")
+            }
+		},
+		y: {
+			show: true,
+			tick: {
+                format: d3.format("$,")
+            }
+		}
+	}
+	});
+	</script>
+	
+	<script>
+		var chart2 = c3.generate({
+		bindto: '#categoryPropensityChart',
+		data: {
+			columns: [
+				['Low propensity', 100, 80, 60, 30],
+				['High propensity', 5, 15, 40, 45]
+			],
+			type: 'bar',
+			groups: [
+				['Low propensity', 'High propensity']
+			]
+		},
+		axis: {
+			x: {
+				type: 'category',
+				categories: ['< 10% (DB-1)', '10-25% (DB-2)', '25-50% (DB-3)', '>50%(DB-4)']
+			}
+		},
+		grid: {
+        y: {
+            lines: [{value:0}]
+        }
+    }
+		});
+	</script>
+	
+	
+	<script type="text/javascript">
+	var chart3 = c3.generate({
+		bindto: '#customerProfileDetails',
+		data: {
+			columns: [
+				['Chinese Medicine', 30],
+				['Health Foods', 40],
+				['General Medicene', 30]
+			],
+			type : 'donut',
+			onclick: function (d, i) { console.log("onclick", d, i); },
+			onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+			onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+		},
+		donut: {
+			title: "Customer Profile"
+		}
+	});
+	
+	</script>
+
+	<script type="text/javascript">
+	var chart4 = c3.generate({
+	bindto: '#locationStats',	
+    data: {
+		x : 'store',
+        url: '/resources/data/store-wise-data.csv',
+        type: 'bar'
+    },
+    axis: {
+        rotated: true,
+        x: {
+				type: 'category'
+			}
+		}
+	});
+	</script>
+	
+	
+	<script type="text/javascript">
+
+	  $(document).ready(function(){
+
+		$("#discountDrop").change(function () {
+		  var str = $(this).text();
+			$( "#customerProfileDetails" ).show();
+		});
+
+	  });
+	</script>	
+	
+
+	
 </body>
 
 </html>

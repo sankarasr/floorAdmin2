@@ -8,7 +8,10 @@ public class Locations {
 	String 	region,
 			district,
 			latitude,
-			longitude;
+			longitude,
+			storeId,
+			footFalls,
+			kRevenue;
 
 	public String getRegion() {
 		return region;
@@ -40,6 +43,30 @@ public class Locations {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
+
+	public String getFootFalls() {
+		return footFalls;
+	}
+
+	public void setFootFalls(String footFalls) {
+		this.footFalls = footFalls;
+	}
+
+	public String getkRevenue() {
+		return kRevenue;
+	}
+
+	public void setkRevenue(String kRevenue) {
+		this.kRevenue = kRevenue;
 	}
 	
 	

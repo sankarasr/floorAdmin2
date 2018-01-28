@@ -16,5 +16,10 @@ public class FloorController {
     public String index() {
         return "index";
     }
+	
+	@RequestMapping("/promotionAnalysis")
+    public String promotionAnalysis() {
+        return "promotionAnalysis";
+    }
 
 }
